@@ -1,12 +1,15 @@
+#!/usr/bin/env node
+console.log('Oi CLI!');
+
 const chalk = require('chalk');
-const { soma, sub } = require('./mdlinks');
+const { readFile } = require('./mdlinks');
 
-const resultadoSoma = soma(1, 3);
-const resultadoSub = sub(4, 2);
+const input = process.argv;
+console.log(input);
 
-console.log(chalk.blue(resultadoSoma), chalk.red(resultadoSub));
+const path = process.argv[2];
 
-const idade = 24;
-const novaIdade = idade + 1;
-
-console.log(novaIdade);
+readFile(path)
+.then((content) => {
+    console.log(chalk.bgGrey(content))
+});

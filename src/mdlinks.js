@@ -1,9 +1,13 @@
-function soma(a, b) {
-  return a + b;
+// função para ler arquivo 
+const fs = require('fs');
+
+function readFile(path) {
+  return new Promise(function (resolve, reject) {
+    fs.readFile(path, 'utf8', (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
 }
 
-function sub(a, b) {
-  return a - b;
-}
-
-module.exports = { soma, sub };
+module.exports = { readFile };
