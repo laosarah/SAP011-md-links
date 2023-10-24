@@ -1,13 +1,19 @@
-// função para ler arquivo 
 const fs = require('fs');
 
-function readFile(path) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(path, 'utf8', (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
-  });
-}
+// função extrair links de arquivo .md
+function extractLinks(path) {
+  return fs.promises.readFile(path, 'utf8')
+  .then ((fileContent) => {
+    const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
+    const matches = [...fileContent.matchAll(regex)];
+    const links = matches.map((link) => ({
+      text: link[1],
+      url: link[2],
+      file: path,
+    })
+    )
+    return links;
+  })
+};
 
-module.exports = { readFile };
+module.exports = { extractLinks };
