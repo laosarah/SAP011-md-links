@@ -1,9 +1,6 @@
-function soma(a, b) {
-  return a + b;
-}
+// const fs = require('fs');
 
-function sub(a, b) {
-  return a - b;
-}
+// função mdLinks
 
-module.exports = { soma, sub };
+
+// module.exports = { mdLinks };

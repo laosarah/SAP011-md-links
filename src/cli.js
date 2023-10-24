@@ -1,12 +1,16 @@
-const chalk = require('chalk');
-const { soma, sub } = require('./mdlinks');
+#!/usr/bin/env node
 
-const resultadoSoma = soma(1, 3);
-const resultadoSub = sub(4, 2);
+const { extractLinks, linkValidation } = require('./index.js');
 
-console.log(chalk.blue(resultadoSoma), chalk.red(resultadoSub));
+// caminho do arquivo que o usuário irá fornecer
+const path = process.argv[2];
 
-const idade = 24;
-const novaIdade = idade + 1;
+const options = {
+  validate: process.argv.includes('--validate'),
+  stats: process.argv.includes('--stats'),
+}
+console.log(options);
 
-console.log(novaIdade);
+extractLinks(path, options).then((links) => {
+  console.log((links));
+});
