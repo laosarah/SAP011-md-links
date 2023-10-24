@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 
-const { extractLinks } = require('./mdlinks');
+const { extractLinks, linkValidation } = require('./index.js');
 
+// caminho do arquivo que o usuário irá fornecer
 const path = process.argv[2];
 
-extractLinks(path).then((links) => {
-    console.log((links));
-});
+const options = {
+  validate: process.argv.includes('--validate'),
+  stats: process.argv.includes('--stats'),
+}
+console.log(options);
 
-// console.log(extractLinks(path));
+extractLinks(path, options).then((links) => {
+  console.log((links));
+});
