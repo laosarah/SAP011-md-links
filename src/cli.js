@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { extractLinks, linkValidation } = require('./index.js');
+const { mdLinks } = require('./mdlinks.js');
 
 // caminho do arquivo que o usuário irá fornecer
 const path = process.argv[2];
@@ -11,6 +11,6 @@ const options = {
 }
 console.log(options);
 
-extractLinks(path, options).then((links) => {
+mdLinks(path, options).then((links) => {
   console.log((links));
 });
