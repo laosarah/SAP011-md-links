@@ -16,29 +16,35 @@ function extractLinks(fileContent, filePath) {
 
 // função validar links do arquivo .md (argumento: link)
 function linkValidation(link) {
-  return fetch(link.href)
-    .then(response => {
+  return fetch(link.href).then((response) => {
+    if(!response.ok) {
+      link.valid = false;
+      link.error = response.status;
+    } else {
+      link.valid = true;
       link.status = response.status;
-      link.statusText = response.statusText;
-      return link;
-    })
-    .catch((error) => {
-      link.status = -1;
-      link.statusText = error.message;
-      return link;
-    });
+    }
+    return link;
+  })
 }
 
 // função estatistica links do arquivo .md (argumento: links)
-function linkStatistics(links) {
+function linkStatistics(links, checkingBroken) {
   const totalLinks = links.length;
   const uniqueLinks = new Set(links.map(link => link.href)).size;
-  const brokenLinks = links.filter(link => link.status !== 200).length;
-  return {
-    total: totalLinks,
-    unique: uniqueLinks,
-    broken: brokenLinks,
-  };
+  if(checkingBroken) {
+    const brokenLinks = links.filter(link => link.status !== 200).length;
+    return {
+      total: totalLinks,
+      unique: uniqueLinks,
+      broken: brokenLinks,
+    };
+  } else {
+    return {
+      total: totalLinks,
+      unique: uniqueLinks,
+    };
+  }
 }
 
 module.exports = { extractLinks, linkValidation, linkStatistics };

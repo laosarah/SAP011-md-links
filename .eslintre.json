@@ -9,5 +9,11 @@
         "ecmaVersion": "latest"
     },
     "rules": {
+        "no-console": "off",
+        "no-unused-vars": "off",
+        "quotes": "off",
+        "object-curly-newline": "off",
+        "no-trailing-spaces": "off",
+        "max-len": "off"
     }
 }

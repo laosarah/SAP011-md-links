@@ -11,28 +11,30 @@ function mdLinks(filePath, options) {
     }
     fs.promises.readFile(absolutePath, 'utf8')
     .then((fileContent) => {
-      const links = extractLinks(fileContent, absolutePath)
+      let links = extractLinks(fileContent, absolutePath)
       if(links.length === 0) {
         reject(new Error('No links found in this file'));
       }
-      if(options.validate || options.stats) {
-        const linkValidationPromises = links.map(link => linkValidation(link));
-        Promise.all(linkValidationPromises)
-          .then((link) => {
-            if(options.stats) {
-              const stats = linkStatistics(link);
-              resolve({ links: link, stats: stats });
-            } else {
-              resolve(link);
-            }
-          })
-          .catch(reject);
-        } else {
-          resolve(links);
+      if(options.validate) {
+        links = links.map(link => linkValidation(link));
+        Promise.all(links)
+        .then((linksValidated) => {
+          let stats = {};
+          if(options.stats) {
+            stats = linkStatistics(linksValidated, true);
+          }
+          resolve({ links: linksValidated, stats: stats });
+        }).catch(reject);
+      } else {
+        let stats = {};
+        if(options.stats) {
+          stats = linkStatistics(links, false);
         }
-      })
-      .catch(reject);
-    });
+        resolve({ links: links, stats: stats });
+      }
+    })
+    .catch(reject);
+  });
 }
 
 module.exports = { mdLinks };
