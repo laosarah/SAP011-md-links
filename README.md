@@ -17,7 +17,7 @@ O MD-Links é uma ferramenta de linha de comando (CLI) desenvolvida utilizando N
 
 ## 2. Fluxograma
 
-![Fluxograma MdLinks](../../assets/Fluxograma_Sarah_Lao.png)
+![Fluxograma MdLinks](/assets/Fluxograma_Sarah_Lao.png)
 
 ## 3. Instalação e Funcionalidade
 
